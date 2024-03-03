@@ -22,7 +22,7 @@ const baseUrl = `https://${projectId}.api.sanity.io/v${new Date().toISOString().
 //Deny if not from the right origin
 
 app.use((req, res, next) => {
-  if (req.get('host') === 'https://mythic-trials.vercel.app') {
+  if (req.get('host') === 'https://mythic-trials.vercel.app/*') {
     next();
   } else {
     res.status(403).send('Forbidden');
