@@ -2,12 +2,13 @@ const express = require('express');
 const fetch = require('node-fetch');
 require('dotenv').config()
 
+
 const app = express();
 const PORT = 8080;
 const cors = require('cors');
 
 const corsOption = {
-  origin: ['http://localhost:3000', 'https://mythic-trials.vercel.app/*' ],
+  origin: 'https://mythic-trials.vercel.app',
 };
 app.use(cors(corsOption));
 app.use(express.json());
@@ -17,6 +18,17 @@ const dataset = process.env.SANITY_DATASET;
 const token = process.env.SANITY_TOKEN;
 
 const baseUrl = `https://${projectId}.api.sanity.io/v${new Date().toISOString().slice(0, 10)}/data/mutate/${dataset}`;
+
+//Deny if not from the right origin
+
+app.use((req, res, next) => {
+  if (req.get('host') === 'https://mythic-trials.vercel.app') {
+    next();
+  } else {
+    res.status(403).send('Forbidden');
+  }
+}
+);
 
 
 app.post('/postToSanity', async (req, res) => {
@@ -45,6 +57,8 @@ app.post('/postToSanity', async (req, res) => {
     res.status(500).json({ error: 'Internal Server Error' });
   }
 });
+
+
 
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
