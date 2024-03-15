@@ -28,7 +28,7 @@ const baseUrl = `https://${projectId}.api.sanity.io/v${new Date().toISOString().
 //   }
 // });
 
-
+console.log('1')
 app.post('/postToSanity', async (req, res) => {
   try {
     const { mutations } = req.body;
