@@ -8,7 +8,7 @@ const PORT = 8080;
 const cors = require('cors');
 
 const corsOption = {
-  origin: 'https://mythic-trials.vercel.app',
+  origin: 'https://trial.nl-wow.no',
 };
 app.use(cors(corsOption));
 app.use(express.json());
@@ -20,9 +20,8 @@ const token = process.env.SANITY_TOKEN;
 const baseUrl = `https://${projectId}.api.sanity.io/v${new Date().toISOString().slice(0, 10)}/data/mutate/${dataset}`;
 
 //Deny if not from the right origin
-
 app.use((req, res, next) => {
-  if (req.get('origin') === 'https://mythic-trials.vercel.app') {
+  if (req.get('origin') === 'https://trial.nl-wow.no') {
     next();
   } else {
     res.status(403).send('Forbidden');
