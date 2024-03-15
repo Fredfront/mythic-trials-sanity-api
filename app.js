@@ -8,7 +8,7 @@ const PORT = 8080;
 const cors = require('cors');
 
 const corsOption = {
-  origin: 'https://trial.nl-wow.no/',
+  origin: 'https://trials.nl-wow.no/',
 };
 app.use(cors(corsOption));
 app.use(express.json());
@@ -21,7 +21,7 @@ const baseUrl = `https://${projectId}.api.sanity.io/v${new Date().toISOString().
 
 //Deny if not from the right origin
 app.use((req, res, next) => {
-  if (req.get('origin') === 'https://trial.nl-wow.no/') {
+  if (req.get('origin') === 'https://trials.nl-wow.no/') {
     next();
   } else {
     res.status(403).send('Forbidden');
