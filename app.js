@@ -5,12 +5,12 @@ require('dotenv').config()
 
 const app = express();
 const PORT = 8080;
-const cors = require('cors');
+// const cors = require('cors');
 
-const corsOption = {
-  origin: 'https://trials.nl-wow.no/',
-};
-app.use(cors(corsOption));
+// const corsOption = {
+//   origin: 'https://trials.nl-wow.no/',
+// };
+// app.use(cors(corsOption));
 app.use(express.json());
 
 const projectId = process.env.SANITY_PROJECT_ID;
@@ -20,13 +20,13 @@ const token = process.env.SANITY_TOKEN;
 const baseUrl = `https://${projectId}.api.sanity.io/v${new Date().toISOString().slice(0, 10)}/data/mutate/${dataset}`;
 
 //Deny if not from the right origin
-app.use((req, res, next) => {
-  if (req.get('origin') === 'https://trials.nl-wow.no/') {
-    next();
-  } else {
-    res.status(403).send('Forbidden');
-  }
-});
+// app.use((req, res, next) => {
+//   if (req.get('origin') === 'https://trials.nl-wow.no/') {
+//     next();
+//   } else {
+//     res.status(403).send('Forbidden');
+//   }
+// });
 
 
 app.post('/postToSanity', async (req, res) => {
