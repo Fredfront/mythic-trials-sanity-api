@@ -19,9 +19,10 @@ const token = process.env.SANITY_TOKEN;
 
 const baseUrl = `https://${projectId}.api.sanity.io/v${new Date().toISOString().slice(0, 10)}/data/mutate/${dataset}`;
 
-//Deny if not from the right origin
 app.use((req, res, next) => {
-  if (req.get('origin') === 'https://trials.nl-wow.no/') {
+  const origin = req.get('origin') || req.get('referer'); // Check Origin or Referer header
+  if (origin === 'https://trials.nl-wow.no/') {
+    res.setHeader('Access-Control-Allow-Origin', origin);
     next();
   } else {
     res.status(403).send('Forbidden');
