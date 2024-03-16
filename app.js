@@ -3,14 +3,9 @@ const fetch = require('node-fetch');
 require('dotenv').config()
 
 
-// app.use(cors(corsOption));
 const app = express();
 const PORT = 8080;
-const cors = require('cors');
 
-// const corsOption = {
-//   origin: 'https://trials.nl-wow.no/',
-// };
 app.use(express.json());
 
 const projectId = process.env.SANITY_PROJECT_ID;
@@ -18,17 +13,6 @@ const dataset = process.env.SANITY_DATASET;
 const token = process.env.SANITY_TOKEN;
 
 const baseUrl = `https://${projectId}.api.sanity.io/v${new Date().toISOString().slice(0, 10)}/data/mutate/${dataset}`;
-
-// app.use((req, res, next) => {
-//   const origin = req.get('origin') || req.get('referer'); // Check Origin or Referer header
-//   if (origin === 'https://trials.nl-wow.no/') {
-//     res.setHeader('Access-Control-Allow-Origin', origin);
-//     next();
-//   } else {
-//     res.status(403).send('Forbidden');
-//   }
-// });
-
 
 app.post('/postToSanity', async (req, res) => {
   try {
