@@ -11,7 +11,7 @@ const cors = require('cors');
 // const corsOption = {
 //   origin: 'https://trials.nl-wow.no/',
 // };
-// app.use(express.json());
+app.use(express.json());
 
 const projectId = process.env.SANITY_PROJECT_ID;
 const dataset = process.env.SANITY_DATASET;
@@ -39,7 +39,7 @@ app.post('/postToSanity', async (req, res) => {
       headers: {
         'Content-Type': 'application/json',
         Authorization: `Bearer ${token}`,
-        
+
       },
       body: JSON.stringify({ mutations }),
     });
