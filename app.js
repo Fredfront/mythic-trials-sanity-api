@@ -44,7 +44,7 @@ app.post('/postToSanity', async (req, res) => {
 
     if (discordWebhookUrl && response.ok && data.results && (data.results[0].operation === 'update' || data.results[0].operation === 'create')) {
       const teamName = mutations?.[0]?.createOrReplace?.teamName || 'N/A';
-      const imageUrl = urlForImage(mutations?.[0]?.createOrReplace?.image?.asset?._ref);
+      const imageUrl = urlForImage(mutations?.[0]?.createOrReplace?.teamImage.asset._ref);
 
       await fetch(discordWebhookUrl, {
         method: 'POST',
