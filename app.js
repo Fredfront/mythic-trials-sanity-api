@@ -53,7 +53,6 @@ app.post('/postToSanity', async (req, res) => {
         },
         body: JSON.stringify({
           content: {
-            content: `New Mythic Plus team created: ${teamName}`,
             embeds: [
               {
                 title: teamName,
