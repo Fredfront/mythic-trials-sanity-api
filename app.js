@@ -52,7 +52,19 @@ app.post('/postToSanity', async (req, res) => {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          content: `Nytt lag opprettet: ${teamName}, bilde: ${imageUrl}`,
+          content: {
+            content: `New Mythic Plus team created: ${teamName}`,
+            embeds: [
+              {
+                title: teamName,
+                description: 'A new Mythic Plus team has been created!',
+                color: 0x00ff00,
+                thumbnail: {
+                  url: imageUrl,
+                },
+              },
+            ],
+          },
         }),
       });
 
