@@ -36,7 +36,7 @@ app.post('/postToSanity', async (req, res) => {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          content: `Ny påmelding fra ${mutations.teamName}`,
+          content: `Nytt lag opprettet: ${data.results[0].result._id}`,
         }),
       });
 
