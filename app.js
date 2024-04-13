@@ -42,30 +42,39 @@ app.post('/postToSanity', async (req, res) => {
 
     const data = await response.json();
 
-    if (discordWebhookUrl && response.ok && data.results && (data.results[0].operation === 'update' || data.results[0].operation === 'create')) {
+    if (discordWebhookUrl && response.ok && data.results) {
       const teamName = mutations?.[0]?.createOrReplace?.teamName || 'N/A';
-      const imageUrl = urlForImage(mutations?.[0]?.createOrReplace?.teamImage.asset._ref);
+      const operation = data.results[0]?.operation || '';
 
-      await fetch(discordWebhookUrl, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          content: `Nytt lag opprettet: ${teamName}, bilde: ${imageUrl}`,
-        }),
-      });
+      if (operation === 'update') {
+        await sendDiscordNotification(`Lag oppdatert: ${teamName}`);
+      } else if (operation === 'create') {
+        const imageUrl = urlForImage(mutations?.[0]?.createOrReplace?.teamImage.asset._ref);
+        await sendDiscordNotification(`Nytt lag opprettet: ${teamName}, bilde: ${imageUrl}`);
+      }
 
       res.status(200).json({ message: 'Data posted to Sanity successfully', data });
     } else {
-      console.error('Failed to create Mythic Plus team:', data);
-      res.status(response.status).json({ error: 'Failed to create Mythic Plus team', data });
+      console.error('Failed to update/create Mythic Plus team:', data);
+      res.status(response.status).json({ error: 'Failed to update/create Mythic Plus team', data });
     }
   } catch (error) {
-    console.error('Failed to create Mythic Plus team:', error);
+    console.error('Failed to update/create Mythic Plus team:', error);
     res.status(500).json({ error: 'Internal Server Error' });
   }
 });
+
+async function sendDiscordNotification(message) {
+  if (!discordWebhookUrl) return;
+  
+  await fetch(discordWebhookUrl, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ content: message }),
+  });
+}
 
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
