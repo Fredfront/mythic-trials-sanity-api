@@ -46,12 +46,12 @@ app.post('/postToSanity', async (req, res) => {
       const teamName = mutations?.[0]?.createOrReplace?.teamName || 'N/A';
       const operation = data.results[0]?.operation || '';
 
-      if (operation === 'update') {
-        await sendDiscordNotification(`Lag oppdatert: ${teamName}`);
-      } else if (operation === 'create') {
-        const imageUrl = urlForImage(mutations?.[0]?.createOrReplace?.teamImage.asset._ref);
-        await sendDiscordNotification(`Nytt lag opprettet: ${teamName}, bilde: ${imageUrl}`);
-      }
+      // if (operation === 'update') {
+      //   await sendDiscordNotification(`Lag oppdatert: ${teamName}`);
+      // } else if (operation === 'create') {
+      //   const imageUrl = urlForImage(mutations?.[0]?.createOrReplace?.teamImage.asset._ref);
+      //   await sendDiscordNotification(`Nytt lag opprettet: ${teamName}, bilde: ${imageUrl}`);
+      // }
 
       res.status(200).json({ message: 'Data posted to Sanity successfully', data });
     } else {
