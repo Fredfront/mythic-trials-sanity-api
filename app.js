@@ -32,21 +32,21 @@ const baseUrl = `https://${projectId}.api.sanity.io/v1/data/mutate/${dataset}`;
 app.post('/postToSanity', async (req, res) => {
   try {
     const { mutations } = req.body;
-    // const { teamName } = mutations[0].createOrReplace;
+    const { teamName } = mutations[0].createOrReplace;
 
-    // const client = new Client({
-    //   connectionString: postgresConnectionString,
-    // });
+    const client = new Client({
+      connectionString: postgresConnectionString,
+    });
 
-    // await client.connect();
+    await client.connect();
 
-    // const query = `
-    // INSERT INTO Teams (Name)
-    // VALUES ($1)
-    // `;
+    const query = `
+    INSERT INTO Teams (Name)
+    VALUES ($1)
+    `;
 
-    // await client.query(query, [teamName]);
-    // await client.end();
+    await client.query(query, [teamName]);
+    await client.end();
 
     const response = await fetch(baseUrl, {
       method: 'POST',
