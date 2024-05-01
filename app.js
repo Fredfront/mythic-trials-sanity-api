@@ -1,4 +1,4 @@
-import createImageUrlBuilder from '@sanity/image-url';
+// import createImageUrlBuilder from '@sanity/image-url';
 import express from 'express';
 import fetch from 'node-fetch';
 import dotenv from 'dotenv';
@@ -17,36 +17,36 @@ const token = process.env.SANITY_TOKEN;
 const discordWebhookUrl = process.env.DISCORD_WEBHOOK_URL;
 const postgresConnectionString = process.env.POSTGRES_CONNECTION_STRING;
 
-const imageBuilder = createImageUrlBuilder({
-  projectId: projectId || '',
-  dataset: dataset || '',
-});
+// const imageBuilder = createImageUrlBuilder({
+//   projectId: projectId || '',
+//   dataset: dataset || '',
+// });
 
-const urlForImage = (source) => {
-  if (!source) return '';
-  return imageBuilder.image(source).auto('format').fit('max').url() || ''; // Ensure to return an empty string if URL is not available
-};
+// const urlForImage = (source) => {
+//   if (!source) return '';
+//   return imageBuilder.image(source).auto('format').fit('max').url() || ''; // Ensure to return an empty string if URL is not available
+// };
 
 const baseUrl = `https://${projectId}.api.sanity.io/v1/data/mutate/${dataset}`;
 
 app.post('/postToSanity', async (req, res) => {
   try {
     const { mutations } = req.body;
-    const { teamName } = mutations[0].createOrReplace;
+    // const { teamName } = mutations[0].createOrReplace;
 
-    const client = new Client({
-      connectionString: postgresConnectionString,
-    });
+    // const client = new Client({
+    //   connectionString: postgresConnectionString,
+    // });
 
-    await client.connect();
+    // await client.connect();
 
-    const query = `
-    INSERT INTO Teams (Name)
-    VALUES ($1)
-    `;
+    // const query = `
+    // INSERT INTO Teams (Name)
+    // VALUES ($1)
+    // `;
 
-    await client.query(query, [teamName]);
-    await client.end();
+    // await client.query(query, [teamName]);
+    // await client.end();
 
     const response = await fetch(baseUrl, {
       method: 'POST',
